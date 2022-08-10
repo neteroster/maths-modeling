@@ -14,13 +14,14 @@ macro_rules! measuret_codeblock {
  * output: `measuret_codeblock('calculate'): *`.
 */
 
-pub fn measuret_function<T>(f: impl FnOnce() -> T) -> (T, std::time::Duration) {
+pub fn measuret_closure<T>(f: impl FnOnce() -> T) -> (T, std::time::Duration) {
     let timer = std::time::Instant::now();
     let result = f();
     (result, timer.elapsed())
 }
-/* `measuret_function<T>` function: measure the execution time of a closure.
- * usage: `measuret_function(<closure>);`
+/* `measuret_closure<T>` function: measure the execution time of a closure.
+ * usage: `measuret_closure(<closure>);`
  * return value: (T, std::time::Duration)
- * example: `let (_, t) = measuret_function(|| {let mut x = 0; for i in 0..10000 {x += 1;}});`
+ * example: `let (_, t) = measuret_closure(|| {let mut x = 0; for i in 0..10000 {x += 1;}});`
 */
+
