@@ -34,15 +34,14 @@ pub struct Dumper {
 
 impl Dumper {
     pub fn new(path: &'static str) -> Dumper {
-        Dumper {
-            path,
-            file: std::fs::File::options()
-                .write(true)
-                .create(true)
-                .append(true)
-                .open(path)
-                .unwrap(),
-        }
+        let file = std::fs::File::options()
+            .write(true)
+            .create(true)
+            .append(true)
+            .open(path)
+            .unwrap();
+
+        Dumper { path, file }
     }
     pub fn dump_line(&mut self, content: &str) {
         self.file.write_fmt(format_args!("{}\n", content)).unwrap();
