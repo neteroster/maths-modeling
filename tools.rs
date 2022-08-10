@@ -1,9 +1,9 @@
-use std::{fmt::Debug, io::Write, vec};
+use std::{self, fmt::Debug, fs, io::Write, time};
 
 #[macro_export]
 macro_rules! measuret_codeblock {
     ($name:literal, $($code_block:tt)+) => {
-        let timer = std::time::Instant::now();
+        let timer = time::Instant::now();
         $(
             $code_block
         )+
@@ -16,8 +16,8 @@ macro_rules! measuret_codeblock {
  * output: `measuret_codeblock('calculate'): *`.
 */
 
-pub fn measuret_closure<T>(f: impl FnOnce() -> T) -> (T, std::time::Duration) {
-    let timer = std::time::Instant::now();
+pub fn measuret_closure<T>(f: impl FnOnce() -> T) -> (T, time::Duration) {
+    let timer = time::Instant::now();
     let result = f();
     (result, timer.elapsed())
 }
@@ -34,7 +34,7 @@ pub struct Dumper {
 
 impl Dumper {
     pub fn new(path: &'static str) -> Dumper {
-        let file = std::fs::File::options()
+        let file = fs::File::options()
             .write(true)
             .create(true)
             .append(true)
